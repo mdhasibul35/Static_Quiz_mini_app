@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,6 +43,7 @@ class _HomeState extends State<Home> {
      int _score=0;
      int i=0;
      bool isFinished=false;
+     bool showResultStatus=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -181,8 +183,31 @@ class _HomeState extends State<Home> {
                   audioCache.load('song.mp3');
                   audioCache.play('song.mp3');
                   print("exam has been finished");
+
+ Alert(
+      context: context,
+      type: AlertType.error,
+      title: "Score: $_score",
+      desc: "Exam finished",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "good work",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+        )
+      ],
+    ).show();
+    setState(() {
+      i=0;
+      _score=0;
+      selectedValue='';
+    });
                   
                 }else{
+                  
                   i++;
                 }
                   
